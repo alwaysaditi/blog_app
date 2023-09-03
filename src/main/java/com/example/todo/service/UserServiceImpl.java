@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         return userDAO.findById(id);
     }
 
@@ -41,10 +42,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.save(theUser);
     }
 
-    @Override
-    @Transactional
-    public void deletebyId(int id) {
-        userDAO.deletebyId(id);
-    }
+//    @Override
+//    @Transactional
+//    public void deletebyId(int id) {
+//        userDAO.deletebyId(id);
+//    }
 
 }

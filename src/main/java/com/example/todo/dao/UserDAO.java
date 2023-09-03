@@ -7,15 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserDAO {
+public interface UserDAO extends JpaRepository<User,Integer> {
 
-    List<User> findAll();
 
-    User findById(int id);
-
-    User save (User theUser);
-
-    void deletebyId(int id);
 
 
 }

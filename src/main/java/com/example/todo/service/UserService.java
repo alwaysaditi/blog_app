@@ -1,22 +1,20 @@
 package com.example.todo.service;
 
 import com.example.todo.entity.User;
-import jakarta.transaction.Transactional;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     List<User> findAll();
 
-    User findById(int id);
+    Optional<User> findById(int id);
 
 
 
 
  User saveUser(User theUser);
 
-    void deletebyId(int id);
+    //void deletebyId(int id);
 }
