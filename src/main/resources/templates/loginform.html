@@ -26,13 +26,13 @@
     <div th:if="${error}" class="error">
       <p th:text="${error}"></p>
 
-      <script th:inline="javascript">
-        var message = /*[[${error}]]*/ '';
-    </script>
-      <!-- JavaScript code embedded within the Thymeleaf if block -->
-      <script>
-            alert(message);
-        </script>
+<!--      <script th:inline="javascript">-->
+<!--        var message = /*[[${error}]]*/ '';-->
+<!--    </script>-->
+<!--      &lt;!&ndash; JavaScript code embedded within the Thymeleaf if block &ndash;&gt;-->
+<!--      <script>-->
+<!--            alert(message);-->
+<!--        </script>-->
     </div>
 
   </form>

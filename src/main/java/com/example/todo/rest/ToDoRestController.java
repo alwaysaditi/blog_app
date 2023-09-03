@@ -17,6 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/api")
 public class ToDoRestController {
  boolean email_reg=false;
+ User authenticatedUser;
+
+ User newlyCreatedUser;
+
+
     @Autowired
     private UserService userService ;
     @Autowired
@@ -34,8 +39,9 @@ public class ToDoRestController {
             theSavedUser.setId(0);
             userService.saveUser(theSavedUser);
           email_reg = false;
-          model.addAttribute("errorMessage",email_reg);
-            return "employeesavesuccess";
+          model.addAttribute("email_reg",email_reg);
+          newlyCreatedUser =theSavedUser;
+            return "redirect:/api/firstdashboard";
         }
 
         catch (Exception e )
@@ -43,7 +49,8 @@ public class ToDoRestController {
 
             System.out.println("duplicate emails");
             email_reg = true;
-            model.addAttribute("errorMessage",email_reg);
+            model.addAttribute("email_reg",email_reg);
+            model.addAttribute("errorMess","An account with the email already exists. Please login or try again");
             return "signupform";
            // return "duplicate_email";
            // return "signupform";
@@ -60,7 +67,13 @@ public class ToDoRestController {
 
     }
 
+@GetMapping("/firstdashboard")
+String employeeSaveSuccess()
+{
+    return "employeesavesuccess";
+}
     @PostMapping("/login")
+    //The URL redirected to postmapping displays the page AFTER the data has been posted
     String loginCred(@ModelAttribute("userLogin") User userLogin, Model model) {
         // user passed in form is stored in userLogin and database user in user.
         User user = userRepository.findByEmail(userLogin.getEmail());
@@ -73,7 +86,8 @@ public class ToDoRestController {
             if (userLogin.getPassword().equals(user.getPassword())) {
                 // Successful login
                 // Add your authentication logic here
-                return "successful_login"; // Redirect to dashboard on successful login
+                authenticatedUser = userLogin;
+                return "redirect:/api/firstdashboard"; // Redirect to dashboard on successful login
             } else {
                 // Incorrect password
                 model.addAttribute("error", "Incorrect password. Please try again.");
@@ -90,7 +104,7 @@ public class ToDoRestController {
     model.addAttribute("userLogin",user); // default values are initialized here
     return "loginform";
 }
-    @GetMapping("/signup") //to render any page you always need to use getMapping
+    @GetMapping("/signuppage") //to render any page you always need to use getMapping
     // you can only modify the thymeleaf variables in those functions that have an explicit mapping for
     // the corresponding page
             String signupForm(Model model)

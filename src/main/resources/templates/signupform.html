@@ -23,15 +23,17 @@
 
   <button  type="submit" class="btn btn-info col-2"> Save User</button>
 
-    <div th:if="${errorMessage}" class="error">
+<!--    <div th:if="${errorMessage}" class="error">-->
+<!--<div th:text = "no way!"></div>-->
+<!--      &lt;!&ndash; JavaScript code embedded within the Thymeleaf if block &ndash;&gt;-->
+<!--      <script>-->
+<!--            alert("Email already exists. Please try again with a different email!");-->
+<!--        </script>-->
+<!--    </div>-->
 
-      <!-- JavaScript code embedded within the Thymeleaf if block -->
-      <script>
-            alert("Email already exists. Please try again with a different email!");
-        </script>
+    <div th:if="${email_reg}">
+      <p th:text="${errorMess}"></p>
     </div>
-
-
 
 
 
