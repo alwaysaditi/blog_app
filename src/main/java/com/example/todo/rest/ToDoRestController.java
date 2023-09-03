@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ToDoRestController {
  boolean email_reg=false;
  User authenticatedUser;
-
+String user_name;
  User newlyCreatedUser;
 
 
@@ -41,6 +41,7 @@ public class ToDoRestController {
           email_reg = false;
           model.addAttribute("email_reg",email_reg);
           newlyCreatedUser =theSavedUser;
+        user_name = newlyCreatedUser.getFullName();
             return "redirect:/api/firstdashboard";
         }
 
@@ -68,8 +69,10 @@ public class ToDoRestController {
     }
 
 @GetMapping("/firstdashboard")
-String employeeSaveSuccess()
+String employeeSaveSuccess(Model model)
 {
+   model.addAttribute("user_name",user_name);
+
     return "employeesavesuccess";
 }
     @PostMapping("/login")
@@ -86,7 +89,10 @@ String employeeSaveSuccess()
             if (userLogin.getPassword().equals(user.getPassword())) {
                 // Successful login
                 // Add your authentication logic here
+
                 authenticatedUser = userLogin;
+                user_name = authenticatedUser.getFullName();
+
                 return "redirect:/api/firstdashboard"; // Redirect to dashboard on successful login
             } else {
                 // Incorrect password
