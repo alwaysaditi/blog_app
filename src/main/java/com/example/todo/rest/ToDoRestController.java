@@ -42,7 +42,7 @@ String user_name;
           model.addAttribute("email_reg",email_reg);
           newlyCreatedUser =theSavedUser;
         user_name = newlyCreatedUser.getFullName();
-            return "redirect:/api/firstdashboard";
+            return "redirect:/api/newuserdashboard";
         }
 
         catch (Exception e )
@@ -71,11 +71,21 @@ String user_name;
 @GetMapping("/firstdashboard")
 String employeeSaveSuccess(Model model)
 {
+    System.out.println(user_name);
    model.addAttribute("user_name",user_name);
 
     return "employeesavesuccess";
 }
-    @PostMapping("/login")
+
+    @GetMapping("/newuserdashboard")
+    String newUserSetup(Model model)
+    {
+        System.out.println(user_name);
+        model.addAttribute("user_name",user_name);
+
+        return "newuserdashboard";
+    }
+    @PostMapping("/login") // after entering the details on the view loginForm , data gets posted onto /login
     //The URL redirected to postmapping displays the page AFTER the data has been posted
     String loginCred(@ModelAttribute("userLogin") User userLogin, Model model) {
         // user passed in form is stored in userLogin and database user in user.
@@ -90,9 +100,9 @@ String employeeSaveSuccess(Model model)
                 // Successful login
                 // Add your authentication logic here
 
-                authenticatedUser = userLogin;
-                user_name = authenticatedUser.getFullName();
-
+                //authenticatedUser = userLogin;
+                user_name = userRepository.findByEmail(userLogin.getEmail()).getFullName();
+System.out.println("user name here = "+user_name);
                 return "redirect:/api/firstdashboard"; // Redirect to dashboard on successful login
             } else {
                 // Incorrect password
@@ -108,7 +118,7 @@ String employeeSaveSuccess(Model model)
 
     User user = new User();
     model.addAttribute("userLogin",user); // default values are initialized here
-    return "loginform";
+    return "loginform"; // renders the page (view) loginForm
 }
     @GetMapping("/signuppage") //to render any page you always need to use getMapping
     // you can only modify the thymeleaf variables in those functions that have an explicit mapping for
