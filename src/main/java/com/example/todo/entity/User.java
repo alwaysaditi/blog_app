@@ -14,11 +14,14 @@ public class User {
     @Column(name="name")
     private String fullName;
 
-    @Column(name="email" ,unique = true)
+    @Column(name="username" ,unique = true)
     private String email;
 
     @Column(name="password")
     private String password;
+
+
+
 
 
     // define constructors
@@ -30,6 +33,7 @@ public class User {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
+
     }
 
     // define getter/setter
@@ -58,6 +62,8 @@ public class User {
         this.password = password;
     }
 
+
+
     public String getEmail() {
         return email;
     }
@@ -67,13 +73,16 @@ public class User {
     }
 
     // define toString
+
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
-                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+
                 '}';
     }
 }

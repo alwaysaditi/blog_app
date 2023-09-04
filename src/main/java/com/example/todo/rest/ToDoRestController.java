@@ -33,11 +33,12 @@ String user_name;
 // the body passed as JSON object will be automatically converted to a Java POJO object
 
        User theSavedUser = theUser;
-
+System.out.println("the User's details= "+theUser.toString());
         try
         {
             theSavedUser.setId(0);
             userService.saveUser(theSavedUser);
+            //System.out.println("user name of new user "+theSavedUser.getUsername());
           email_reg = false;
           model.addAttribute("email_reg",email_reg);
           newlyCreatedUser =theSavedUser;
@@ -48,10 +49,10 @@ String user_name;
         catch (Exception e )
         {
 
-            System.out.println("duplicate emails");
+            System.out.println("duplicate email or username");
             email_reg = true;
             model.addAttribute("email_reg",email_reg);
-            model.addAttribute("errorMess","An account with the email already exists. Please login or try again");
+            model.addAttribute("errorMess","An account with the email/username already exists. Please login or try again");
             return "signupform";
            // return "duplicate_email";
            // return "signupform";
