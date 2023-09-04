@@ -1,0 +1,37 @@
+1. Configure spring security
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/public/**").permitAll() // Publicly accessible URLs
+                .antMatchers("/admin/**").hasRole("ADMIN") // Requires ADMIN role
+                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER") // Requires ADMIN or USER role
+                .anyRequest().authenticated() // All other requests require authentication
+                .and()
+            .formLogin()
+                .loginPage("/login") // Customize login page if needed
+                .permitAll()
+                .and()
+            .logout()
+                .logoutSuccessUrl("/login?logout") // Customize logout URL if needed
+                .permitAll();
+    }
+}
+
+in security folder. make admin access to all urls and specific roles like doctor/nurse should
+have access to specific urls
+
+next make admin's page to see each unadded user in the users table to be assigned a role in the roles table
+
+then u can start customizing pages and features for each of the users
